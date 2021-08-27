@@ -7,7 +7,7 @@ require("dotenv").config()
 const apiKey = process.env.API_KEY;
 
 //functions
-const movieListOfActor = async (actor) => {
+const getMovieListOfActor = async (actor) => {
   try {
     //first we get the url for the actor via this end point using axios
     const actorResponse = await axios.get(
@@ -19,10 +19,8 @@ const movieListOfActor = async (actor) => {
     const moviesResponse = await axios.get(
       `https://api.themoviedb.org/3/person/${actorId}/movie_credits?api_key=${apiKey}`
     );
-    //now we cast the data
-    const listOfMovies = moviesResponse.data.cast;
-    //finally return the data stored in the variable
-    return listOfMovies;
+    //now we cast and return the data 
+    return moviesResponse.data.cast;
   } catch (error) {
     console.log(error); //if we get an error ... SHOW ME!
   }
@@ -34,8 +32,8 @@ const movieListOfActor = async (actor) => {
 const compareNumberOfMovies = async (firstActor, secondActor) => {
   try {
     // first lets get the list for the first and second actors
-    const firstActorTotalMovies = await movieListOfActor(firstActor);
-    const secondActorTotalMovies = await movieListOfActor(secondActor);
+    const firstActorTotalMovies = await getMovieListOfActor(firstActor);
+    const secondActorTotalMovies = await getMovieListOfActor(secondActor);
     // now lets compare the lists and return the approriate result
     if (firstActorTotalMovies.length > secondActorTotalMovies.length) {
       return `It looks to me that ${firstActor} has been in more movies than ${secondActor}`;
@@ -83,7 +81,7 @@ const main = async () => {
 
     if (choice === 1) {
       const { actorOne } = await prompt.get(PROMPT_SCHEMAS[1]);
-      console.log(await movieListOfActor(actorOne));
+      console.log(await getMovieListOfActor(actorOne));
     } else if (choice === 2) {
       const { actorOne, actorTwo } = await prompt.get([
         PROMPT_SCHEMAS[1],
