@@ -27,12 +27,10 @@ const prompt = require("prompt");
 require("dotenv").config()
 ```
 
-Therefore these packages will need to be downloaded as they are required
+Therefore these packages will need to be downloaded. 
 
 ```bash
-npm install axious
-npm install prompt
-npm install dotent
+npm i
 ```
 
 Once you have the neccesary packages downloaded go ahead and run the program!
