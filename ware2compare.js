@@ -22,6 +22,7 @@ const getMovieListOfActor = async (actor) => {
     //now we cast and return the data 
     return moviesResponse.data.cast;
   } catch (error) {
+    console.log("Name was not found. Please check spelling.")
     console.log(error); //if we get an error ... SHOW ME!
   }
 };
